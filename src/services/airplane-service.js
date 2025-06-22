@@ -1,7 +1,7 @@
 const { Logger } = require("../config");
 const  { AirplaneRepository } = require("../repositories");
 
-const airplaneRepository = AirplaneRepository();
+const airplaneRepository = new AirplaneRepository();
 
 async function createAirplane(data) {
     try {
