@@ -1,4 +1,5 @@
-const { Logger } = require("../config/index");
+const { StatusCodes } = require("http-status-codes");
+const { AppError } = require("../utils/errors");
 
 class CrudRepository {
     constructor(model) {
@@ -11,49 +12,32 @@ class CrudRepository {
     }
 
     async destroy(data) {
-        try {
-            const response = await this.model.destroy({
-                where: {
-                   id: data,
-                },
-            });
-            return response;
-        } catch (error) {
-            Logger.error("Some thing went wrong in the Crud Repo: destroy");
-            throw error;
-        }
+        const response = await this.model.destroy({
+            where: {
+                id: data,
+            },
+        });
+        return response;
     }
 
     async get(data) {
-        try {
-            const response = await this.model.findByPk(data);
-            return response;
-        } catch (error) {
-            Logger.error("Some thing went wrong in the Crud Repo: get");
-            throw error;
+        const response = await this.model.findByPk(data);
+        if(!response) {
+            throw new AppError("Airplane not found", StatusCodes.NOT_FOUND);
         }
+        return response;
     }
 
     async getAll() {
-        try {
-            const response = await this.model.findAll();
-            return response;
-        } catch (error) {
-            Logger.error("Some thing went wrong in the Crud Repo: getAll");
-            throw error;
-        }
+        const response = await this.model.findAll();
+        return response;
     }
 
     async update(id, data) { // data -> {key: value, ...}
-        try {
-            const response = await this.model.update(data, {
-                id: id,
-            });
-            return response;
-        } catch (error) {
-            Logger.error("Some thing went wrong in the Crud Repo: update");
-            throw error;
-        }
+        const response = await this.model.update(data, {
+            id: id,
+        });
+        return response;
     }
 
 }

@@ -26,17 +26,33 @@ async function getAirplanes(req, res) {
         const airplanes = await AirplaneService.getAirplanes();
         SuccessResponse.data = airplanes;
         return res
-            .status(StatusCodes.OK)
-            .json(SuccessResponse);
+                .status(StatusCodes.OK)
+                .json(SuccessResponse);
 
     } catch(error) {
         ErrorResponse.error = error;
         return res.
-            status(error.statusCode)
-            .json(ErrorResponse);
+                status(error.statusCode)
+                .json(ErrorResponse);
+    }
+}
+
+async function getAirplane(req, res) {
+    try {
+        const airplane = await AirplaneService.getAirplane(req.params.id);
+        SuccessResponse.data = airplane;
+        return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponse);
+    } catch(error) {
+        ErrorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponse);
     }
 }
 module.exports = {
     createAirplane,
     getAirplanes,
+    getAirplane,
 }
