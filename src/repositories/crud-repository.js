@@ -1,5 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const { AppError } = require("../utils/errors");
+const { where } = require("sequelize");
 
 class CrudRepository {
     constructor(model) {
@@ -36,13 +37,17 @@ class CrudRepository {
         return response;
     }
 
-    async update(id, data) { // data -> {key: value, ...}
+    async update(id, data) { 
         const response = await this.model.update(data, {
-            id: id,
+            where:{
+                id: id,
+            }
         });
+        if(!response[0]) {
+            throw new AppError("Airplane not found", StatusCodes.NOT_FOUND);
+        }
         return response;
     }
-
 }
 
 module.exports = CrudRepository;
