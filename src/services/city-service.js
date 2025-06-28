@@ -20,6 +20,19 @@ async function createCity(data) {
     }
 }
 
+async function destroyCity(id) {
+    try {
+        const city = await cityRepository.destroy(id);
+        return city;
+    } catch (error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError(`No city with ID: ${id}`, error.statusCode); 
+        }
+        throw new AppError("Failed to destroy a city", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
 module.exports = {
     createCity,
+    destroyCity,
 };
