@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const { ErrorResponse } = require("../utils/common");
 const { AppError } = require("../utils/errors");
 
-function validateCreateAeroplane(req, res, next) {
+function validateCreateAirplane(req, res, next) {
     if(!req.body.modelNumber) {
         ErrorResponse.message = "Something went wrong while creating airplane";
         ErrorResponse.error = new AppError(["Model number not found in the incoming request in the correct form"]);
@@ -14,5 +14,5 @@ function validateCreateAeroplane(req, res, next) {
 }
 
 module.exports = {
-    validateCreateAeroplane,
+    validateCreateAirplane,
 }

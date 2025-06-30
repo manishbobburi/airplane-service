@@ -4,7 +4,7 @@ const { AirplaneMiddlewares } = require("../../middlewares");
 const router = express.Router();
 
 router.post("/",
-  AirplaneMiddlewares.validateCreateAeroplane,
+  AirplaneMiddlewares.validateCreateAirplane,
   AirplaneController.createAirplane
 );
 
