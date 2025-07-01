@@ -8,4 +8,8 @@ router.post("/",
     FlightController.createFlight
 );
 
+router.get("/",
+    FlightController.getFlights
+);
+
 module.exports = router;
