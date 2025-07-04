@@ -1,5 +1,5 @@
 const CrudRepository = require("./crud-repository");
-const { Flight, Airport } = require("../models");
+const { Flight, Airport, Airplane, City} = require("../models");
 
 class FlightRepository extends CrudRepository {
     constructor() {
@@ -12,14 +12,29 @@ class FlightRepository extends CrudRepository {
             order: sort,
             include: [
                 {
-                    model: Airport,
-                    as: 'DepartureAirport',
-                    attributes: ['id', 'name', 'code', 'cityId']
+                    model: Airplane,
+                    as: 'airplaneDetail',
+                    attributes: ['id', 'modelNum', 'capacity'],                   
                 },
                 {
                     model: Airport,
-                    as: 'ArrivalAirport',
-                    attributes: ['id', 'name', 'code', 'cityId']
+                    as: 'departureAirport',
+                    attributes: ['id', 'name', 'code', 'cityId'],
+                    include: {
+                        model: City,
+                        as: 'cityDetail',
+                        attributes: ['id', 'name'],           
+                    }
+                },
+                {
+                    model: Airport,
+                    as: 'arrivalAirport',
+                    attributes: ['id', 'name', 'code', 'cityId'],
+                    include: {
+                        model: City,
+                        as: 'cityDetail',
+                        attributes: ['id', 'name'],                      
+                    }
                 }
             ]
         });
