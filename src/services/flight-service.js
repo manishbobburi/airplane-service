@@ -23,7 +23,7 @@ async function createFlight(data) {
 
 async function getFlights(query) {
     let customFilter = {};
-    let sortFliter = {};
+    let sortFliter = [];
     if(query.trips) {
         const [departureAirportId, arrivalAirportId] = query.trips.split("-");
         if(departureAirportId == arrivalAirportId) {
@@ -63,7 +63,6 @@ async function getFlights(query) {
         const flights = await flightRepository.getFlights(customFilter, sortFliter);
         return flights;
     } catch (error) {
-        console.log("hello");
         if(error.statusCode === StatusCodes.NOT_FOUND) {
             throw new AppError(`No flights with matching filters found`, error.statusCode);
         }
