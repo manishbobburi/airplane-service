@@ -69,7 +69,21 @@ async function getFlights(query) {
         throw new AppError("Failed to retrieve flights", StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
+
+async function getFlight(id) {
+    try {
+        const flight = await flightRepository.get(id);
+        return flight;
+    } catch (error) {
+        if(error.statusCode === StatusCodes.NOT_FOUND) {
+            throw new AppError(`No flight with matching id found`, error.statusCode);
+        }
+        console.error(error);
+        throw new AppError("Failed to retrieve flight", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
 module.exports = {
     createFlight,
     getFlights,
+    getFlight,
 };
