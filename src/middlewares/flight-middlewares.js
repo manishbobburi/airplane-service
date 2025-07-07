@@ -55,12 +55,27 @@ function validateCreateRequest(req, res, next) {
     ErrorResponse.message = "Something went wrong while creating flight.";
     ErrorResponse.error = new AppError(errors);
     return res
-              .status(StatusCodes.BAD_REQUEST)
-              .json(ErrorResponse);
+            .status(StatusCodes.BAD_REQUEST)
+            .json(ErrorResponse);
   }
   next();
 }
 
+function validateUpdateSeatRequest(req, res, next) {
+  const errors = [];
+  if(!req.body.seats || req.body.seats < 0) {
+    errors.push("Invalid seats data.");
+  }
+  if (errors.length > 0) {
+    ErrorResponse.message = "Something went wrong while updating seats.";
+    ErrorResponse.error = new AppError(errors);
+    return res
+            .status(StatusCodes.BAD_REQUEST)
+            .json(ErrorResponse);
+  }
+  next();
+}
 module.exports = {
   validateCreateRequest,
+  validateUpdateSeatRequest,
 };

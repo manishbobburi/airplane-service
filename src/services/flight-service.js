@@ -17,7 +17,7 @@ async function createFlight(data) {
             });
             throw new AppError(explanation, StatusCodes.BAD_REQUEST);
         }
-        throw new AppError("Failed to create a new flight object", StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError("Failed to create a new flight object.", StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
@@ -46,7 +46,7 @@ async function getFlights(query) {
     if (query.departure) {
         const datePart = query.departure;
         if (isNaN(Date.parse(datePart))) {
-            throw new AppError("Invalid departure date provided", StatusCodes.BAD_REQUEST);
+            throw new AppError("Invalid departure date provided.", StatusCodes.BAD_REQUEST);
         }
         const start = new Date(`${datePart}T00:00:00+05:30`).toISOString();
         const end = new Date(`${datePart}T23:59:59.999+05:30`).toISOString();
@@ -64,9 +64,9 @@ async function getFlights(query) {
         return flights;
     } catch (error) {
         if(error.statusCode === StatusCodes.NOT_FOUND) {
-            throw new AppError(`No flights with matching filters found`, error.statusCode);
+            throw new AppError(`No flights with matching filters found.`, error.statusCode);
         }
-        throw new AppError("Failed to retrieve flights", StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError("Failed to retrieve flights.", StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
@@ -76,14 +76,27 @@ async function getFlight(id) {
         return flight;
     } catch (error) {
         if(error.statusCode === StatusCodes.NOT_FOUND) {
-            throw new AppError(`No flight with matching id found`, error.statusCode);
+            throw new AppError(`No flight with matching id found.`, error.statusCode);
         }
+        throw new AppError("Failed to retrieve flight.", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
+async function updateSeats(data) {
+    try {
+        const response = await flightRepository.updateRemainingSeats(data.flightId, data.seats, data.dec);
+        return response;
+    } catch (error) {
         console.error(error);
-        throw new AppError("Failed to retrieve flight", StatusCodes.INTERNAL_SERVER_ERROR);
+        if(error.statusCode === StatusCodes.NOT_FOUND) {
+            throw new AppError(`No flight with matching id found.`, error.statusCode);
+        }
+        throw new AppError("Failed to retrieve flight.", StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 module.exports = {
     createFlight,
     getFlights,
     getFlight,
+    updateSeats,
 };
