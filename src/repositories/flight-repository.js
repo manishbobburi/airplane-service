@@ -43,6 +43,39 @@ class FlightRepository extends CrudRepository {
         return flights;
     }
 
+    async get(id) {
+        const flights = await Flight.findByPk(id, {
+            include: [
+                {
+                    model: Airplane,
+                    as: 'airplaneDetail',
+                    attributes: ['id', 'modelNum', 'capacity'],                   
+                },
+                {
+                    model: Airport,
+                    as: 'departureAirport',
+                    attributes: ['id', 'name', 'code', 'cityId'],
+                    include: {
+                        model: City,
+                        as: 'cityDetail',
+                        attributes: ['id', 'name'],           
+                    }
+                },
+                {
+                    model: Airport,
+                    as: 'arrivalAirport',
+                    attributes: ['id', 'name', 'code', 'cityId'],
+                    include: {
+                        model: City,
+                        as: 'cityDetail',
+                        attributes: ['id', 'name'],                      
+                    }
+                }
+            ]
+        });
+        return flights;
+    }
+
     async updateRemainingSeats(flightId, seats, dec = true) {
         const transaction = await db.sequelize.transaction();
         await db.sequelize.query(addRowLock(flightId));
