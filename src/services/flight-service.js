@@ -48,8 +48,8 @@ async function getFlights(query) {
         if (isNaN(Date.parse(datePart))) {
             throw new AppError("Invalid departure date provided.", StatusCodes.BAD_REQUEST);
         }
-        const start = new Date(`${datePart}T00:00:00+05:30`).toISOString();
-        const end = new Date(`${datePart}T23:59:59.999+05:30`).toISOString();
+        const start = new Date(`${datePart}T00:00:00+05:30`);
+        const end = new Date(`${datePart}T23:59:59.999+05:30`);
         customFilter.departureTime = {
             [Op.between]: [start, end],
         };
