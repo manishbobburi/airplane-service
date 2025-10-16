@@ -1,6 +1,6 @@
 FROM node
 
-WORKDIR /developer/nodejs/api-gateway
+WORKDIR /developer/nodejs/airplane-service
 
 COPY . .
 
