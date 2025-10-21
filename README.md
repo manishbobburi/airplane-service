@@ -7,7 +7,6 @@ Welcome to the Airplane Booking Management Service! This is a robust RESTful API
 |:-----------------|:-----------------|:-------------------------------------------------------|
 | **Backend**         | Node.js, Express.js | Core framework for the API.                           |
 | **Database ORM**    | Sequelize        | Promise-based ORM for MySQL.                          |
-| **Database Driver** | mysql2           | Required driver for Sequelize to connect to MySQL.   |
 | **Configuration**   | dotenv           | For managing environment variables (.env).           |
 | **Containerization**| Docker           | Setup file provided for easy deployment via containers. |
 
@@ -61,7 +60,7 @@ PORT=3000
 DB_USERNAME=root
 DB_PASSWORD=your_password
 DB_HOST=localhost
-DB_NAME=airplane_db
+DB_NAME=FlightsDB
 DB_DIALECT=mysql
 ```
 **4. Set Up the Database:**
