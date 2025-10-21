@@ -56,11 +56,18 @@ npm install
 # .env example
 PORT=3000
 
-# Database Credentials
+# Database credentials
 DB_USERNAME=root
-DB_PASSWORD=your_password
-DB_HOST=localhost
-DB_NAME=FlightsDB
+DB_PASSWORD=your_password_here
+
+# Database names
+DB_NAME_DEV=FlightsDB
+DB_NAME_TEST=database_test
+
+# Hosts
+DB_HOST_DEV=127.0.0.1
+DB_HOST_TEST=127.0.01
+
 DB_DIALECT=mysql
 ```
 **4. Set Up the Database:**
